@@ -1,0 +1,227 @@
+﻿@model eMMDB.Domain.Movie
+
+@{
+    ViewBag.Title = "Create Movie";
+    int actorsCount = 0;
+}
+<link type="text/css" rel="Stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" />
+ <script type="text/javascript" src="//code.jquery.com/ui/1.10.4/jquery-ui.js" ></script>
+ 
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Home", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Movie</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ReleaseYear)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ReleaseYear)
+            @Html.ValidationMessageFor(model => model.ReleaseYear)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Plot)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Plot, new { value = "" })
+            @Html.ValidationMessageFor(model => model.Plot)
+        </div>
+                
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MovieProducer)
+        </div>
+        <div class="editor-field">
+            <input id="producer" type="text" name="producerID" placeholder="Type Producer name"/> <input style="margin-left:30px" type="button" disabled="disabled" name="btnAddProducer" id="btnAddProducer" value="Add Producer" />
+            @Html.ValidationMessageFor(model => Model.MovieProducer)
+        </div>
+
+
+        <div class="editor-label">
+            Upload Poster
+        </div>
+        
+         <div class="editor-field">
+            <input name="posterImage' id="posterImage" type="file" />
+            
+        </div>
+
+        <div id="dialog" style="display:none;overflow:auto" title="Add Actor">
+            <iframe frameborder="0" scrolling="no" width="700" height="700" src="/Person/Create">
+            </iframe>
+        </div>
+        
+        <div class="ui-widget">
+            @Html.LabelFor(model => model.MoviesActors)
+             <input id="actors" type="text" placeholder="Type actor name"/> <input style="margin-left:30px" type="button" disabled="disabled" name="btnAddActor" id="btnAddActor" value="Add Actor" />
+        </div>
+
+        <table id="tblActors" border="1">
+            <thead>
+                <tr class="ui-widget-header ">
+                    <th style="width:120px">Actor ID </th>
+                    <th style="width:200px">Actor Name</th>
+                    <th style="width:100px"> Delete </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    
+         
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<script type="text/javascript">
+     var actorcount=0;
+    
+    $(function () {
+
+       
+        $('#tblActors th').attr('width', 100);
+
+        function log(message) {
+            $("<div>").text(message).prependTo("#log");
+            $("#log").scrollTop(0);
+        }
+
+        $("#actors").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("PeopleSearch", "Home")',
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        if (data.length == 0) {
+                            var noFound = "Add New Actor";
+                            response(noFound.split('\n'));
+                            $("#btnAddActor").removeAttr("disabled"); 
+                        }
+                        // var lines = data.split("\n");
+                        else {
+                            for (var i in data) {
+
+                                var actorInfo = data[i].id + '----' + data[i].Name;
+                                response(actorInfo.split('\n'));
+                            }
+                        }
+
+                        //response(data.Name + '-' + data.PersonID);
+
+                    }
+                });
+            },
+            minLength: 2,
+            select: function (event, ui) {
+                if (ui.item.value !== 'No Results found')
+                    {
+                        var actor = ui.item.value.split('----');
+                        actorcount++;
+                        //$("#tblActors tbody").append("<tr>" + "<td>" + actor[0] + "</td>" + "<td>" + actor[1] + "</td>" + "<td><span class='delete'><a href=''>Delete</a></span></td>" + "</tr>");
+                        $("#tblActors tbody").append("<tr>" + "<td>" + '<input type="text" readonly="true" id="MovieActors_Person_ID_' + actorcount +  '" name="MovieActors_Person_ID_' + actorcount + '" value="' + actor[0] + '"/> </td> + <td>' + '<input type="text" readonly="true" id="MovieActors_Person_Name_' + actorcount + '" name="MovieActors_Person_Name_' + actorcount + '" value="' + actor[1] + '"/>' + '</td> <td><span class="delete"><a href="">Delete</a></span></td></tr>');
+                        $(this).val("");
+                        
+                        return false;
+                    }
+            }
+        });
+
+            $("#producer").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("PeopleSearch", "Home")',
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            if (data.length == 0) {
+                                var noFound = "Add New Producer";
+                                response(noFound.split('\n'));
+                                $("#btnAddProducer").removeAttr("disabled");
+                            }
+                            // var lines = data.split("\n");
+                            else {
+                                for (var i in data) {
+
+                                    var actorInfo = data[i].id + '----' + data[i].Name;
+                                    response(actorInfo.split('\n'));
+                                }
+                            }
+
+                            //response(data.Name + '-' + data.PersonID);
+
+                        }
+                    });
+                },
+                minLength: 2,
+                
+            });
+
+
+
+        $( "#btnAddActor" ).click(function() {
+            $( "#dialog" ).dialog( "open" );
+        });
+
+        $( "#btnAddProducer" ).click(function() {
+            $( "#dialog" ).dialog( "open" );
+        });
+
+        $("#dialog").dialog({
+            autoOpen: false,
+            position: 'center' ,
+            title: 'Add Actor',
+            draggable: false,
+            width : 800,
+            height : 700,
+            resizable : true,
+            modal : true,
+            buttons: {
+                Cancel: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $(document).on('click', 'span.delete', function () {
+                    $(this).closest('tr').find('td').fadeOut(1000, 
+                           function () {
+                        $(this).parents('tr:first').remove();
+                        }); 
+                return false;
+        });
+
+
+    });
+  </script>
+
+ 
+   
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

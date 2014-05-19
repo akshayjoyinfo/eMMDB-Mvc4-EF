@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eMMDB.Domain", "eMMDB.Domain\eMMDB.Domain.csproj", "{390A3E0E-CBE8-4957-A6FB-47DEB3C600DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eMMDB.Web", "eMMDB.Web\eMMDB.Web.csproj", "{C8919C90-3FAA-40FD-8D00-B3BD3900019C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{390A3E0E-CBE8-4957-A6FB-47DEB3C600DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{390A3E0E-CBE8-4957-A6FB-47DEB3C600DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{390A3E0E-CBE8-4957-A6FB-47DEB3C600DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{390A3E0E-CBE8-4957-A6FB-47DEB3C600DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8919C90-3FAA-40FD-8D00-B3BD3900019C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8919C90-3FAA-40FD-8D00-B3BD3900019C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8919C90-3FAA-40FD-8D00-B3BD3900019C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8919C90-3FAA-40FD-8D00-B3BD3900019C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

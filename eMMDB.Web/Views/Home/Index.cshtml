@@ -1,0 +1,80 @@
+﻿@model IEnumerable<eMMDB.Domain.Movie>
+
+@{
+    ViewBag.Title = "eMMDB-Movies";
+}
+
+<h2>Movies</h2>
+
+<p>
+    @Html.ActionLink("Create Movie", "Create")
+
+</p>
+<p>
+     @if (TempData["Notification"] != null)
+        {
+             <h3 style="color:Green" id="NotificationMessage" ><img src="../../Images/Success.gif" /> @TempData["Notification"]</h3>
+        }
+    
+</p>
+<script type="text/javascript">
+
+
+    $(function () {
+
+        $("#NotificationMessage").fadeOut(5000);
+
+        });
+        
+ </script>
+
+<table border="1">
+    <tr style="height:100px">
+        <th style="width:75px">
+            @Html.DisplayNameFor(model => model.Poster)
+        </th>
+
+        <th style="width:150px">
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th style="width:150px">
+            @Html.DisplayNameFor(model => model.ReleaseYear)
+        </th>
+        <th style="width:250px">
+            @Html.DisplayNameFor(model => model.Plot)
+        </th>
+        <th>Cast</th>
+        <th></th>
+    </tr>
+    
+@foreach (var item in Model) {
+    <tr>
+
+        <td>
+            <img src="@Url.Action("GetPoster", new { posterID = item.MovieID })" title="@item.Title"  width="50" height="50" />
+        </td>
+        <td>
+            <b>@Html.ActionLink(item.Title, "Details", new { id = item.MovieID })</b>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReleaseYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Plot)
+        </td>
+        <td>
+             @foreach (var act in item.MoviesActors)
+             {
+            <div class="display-field"> @act.Name </div>
+
+             }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MovieID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MovieID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MovieID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,43 @@
+﻿@model eMMDB.Domain.Person
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Person</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Sex)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Sex)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Dob)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Dob)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Bio)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Bio)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.PersonID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

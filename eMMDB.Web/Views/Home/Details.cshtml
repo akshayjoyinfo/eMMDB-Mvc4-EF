@@ -1,0 +1,66 @@
+﻿@model eMMDB.Domain.Movie
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Movie</legend>
+
+    <div class="display-field">
+        <img src="@Url.Action("GetPoster", new { posterID = Model.MovieID })" title="@Model.Title"  width="50" height="50" />
+    </div>
+    <br />
+    
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Title)
+    </div>
+    <div class="display-field">
+       @Html.DisplayFor(model => model.Title)
+    </div>
+    <br />
+    
+
+    <div class="display-label">
+        <b> @Html.DisplayNameFor(model => model.ReleaseYear)</b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ReleaseYear)
+    </div>
+    <br />
+    
+
+    <div class="display-label">
+       <b>  @Html.DisplayNameFor(model => model.Plot)</b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Plot)
+    </div>
+    <br />
+
+
+    <div class="display-label">
+        <b>Producer Name </b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MovieProducer.Name)
+    </div>
+    <br />
+    <br />
+    <div class="display-label">
+         <b>Cast</b>
+    </div>
+     @foreach (var item in Model.MoviesActors)
+        {
+            <div class="display-field"> @item.Name </div>
+
+        }
+    
+
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.MovieID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
